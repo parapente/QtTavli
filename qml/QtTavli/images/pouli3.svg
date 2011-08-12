@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="85.714287"
+   height="85.714287"
+   id="svg3209"
+   version="1.1"
+   inkscape:version="0.48.1 r9760"
+   sodipodi:docname="pouli3.svg">
+  <defs
+     id="defs3211">
+    <filter
+       color-interpolation-filters="sRGB"
+       inkscape:collect="always"
+       id="filter8135">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="0.71428572"
+         id="feGaussianBlur8137" />
+    </filter>
+    <filter
+       color-interpolation-filters="sRGB"
+       inkscape:collect="always"
+       id="filter8127">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="1.0714286"
+         id="feGaussianBlur8129" />
+    </filter>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.35"
+     inkscape:cx="-59.285718"
+     inkscape:cy="248.57143"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="460"
+     inkscape:window-height="443"
+     inkscape:window-x="57"
+     inkscape:window-y="0"
+     inkscape:window-maximized="0"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0" />
+  <metadata
+     id="metadata3214">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-434.28572,-695.21933)">
+    <g
+       transform="translate(234.45904,378.57865)"
+       id="Pouli3"
+       inkscape:label="#g8426">
+      <path
+         transform="translate(-3.0304577,141.42136)"
+         sodipodi:type="arc"
+         style="fill:#e14b00;fill-opacity:1;fill-rule:nonzero;stroke:none"
+         id="path8232"
+         sodipodi:cx="245.71428"
+         sodipodi:cy="218.07646"
+         sodipodi:rx="42.857143"
+         sodipodi:ry="42.857143"
+         d="m 288.57142,218.07646 c 0,23.66935 -19.18779,42.85715 -42.85714,42.85715 -23.66935,0 -42.85714,-19.1878 -42.85714,-42.85715 0,-23.66934 19.18779,-42.85714 42.85714,-42.85714 23.66935,0 42.85714,19.1878 42.85714,42.85714 z" />
+      <path
+         d="m 288.57142,218.07646 c 0,23.66935 -19.18779,42.85715 -42.85714,42.85715 -23.66935,0 -42.85714,-19.1878 -42.85714,-42.85715 0,-23.66934 19.18779,-42.85714 42.85714,-42.85714 23.66935,0 42.85714,19.1878 42.85714,42.85714 z"
+         sodipodi:ry="42.857143"
+         sodipodi:rx="42.857143"
+         sodipodi:cy="218.07646"
+         sodipodi:cx="245.71428"
+         id="path8234"
+         style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;filter:url(#filter8135)"
+         sodipodi:type="arc"
+         transform="matrix(0.87916667,0,0,0.87916667,26.481446,167.59369)" />
+      <path
+         transform="matrix(0.45416668,0,0,0.45416668,131.26716,260.99047)"
+         sodipodi:type="arc"
+         style="fill:#e14b00;fill-opacity:1;fill-rule:nonzero;stroke:none;filter:url(#filter8127)"
+         id="path8236"
+         sodipodi:cx="245.71428"
+         sodipodi:cy="218.07646"
+         sodipodi:rx="42.857143"
+         sodipodi:ry="42.857143"
+         d="m 288.57142,218.07646 c 0,23.66935 -19.18779,42.85715 -42.85714,42.85715 -23.66935,0 -42.85714,-19.1878 -42.85714,-42.85715 0,-23.66934 19.18779,-42.85714 42.85714,-42.85714 23.66935,0 42.85714,19.1878 42.85714,42.85714 z" />
+    </g>
+  </g>
+</svg>
