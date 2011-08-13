@@ -1,33 +1,56 @@
-var spike = Array(24)
-var dices = Array(2)
-var numPoulia = 15
+var spike = Array(24);
+var dices = Array(2);
+var numPoulia = 15;
+var pouliComponent;
 
 function initialize() {
-    var i
+    var i,j;
 
     for (i=0;i<24;i++) {
-        delete spike[i]
-        spike[i] = new Array()
+        if (spike[i] != null) {
+            for (j=0;j<spike[i].length;j++)
+                spike[i][j].destroy()
+            delete spike[i];
+        }
+        spike[i] = new Array();
     }
+    pouliComponent = Qt.createComponent("Pouli.qml");
 }
 
 function initPortes() {
-    var i
+    var i;
 
     for (i=0;i<5;i++) {
-        spike[5].push(1)
-        spike[11].push(2)
-        spike[12].push(1)
-        spike[18].push(2)
+        put(6,1);
+        put(0,2);
+        put(12,1);
+        put(18,2);
     }
 
     for (i=0;i<2;i++) {
-        spike[0].push(2)
-        spike[23].push(1)
+        put(11,2);
+        put(23,1);
     }
 
-    for (i=0;i<2;i++) {
-        spike[7].push(1)
-        spike[16].push(2)
+    for (i=0;i<3;i++) {
+        put(4,1);
+        put(16,2);
+    }
+}
+
+function put(spikenum, player) {
+    var sprite = pouliComponent.createObject(background);
+    if (sprite == null)
+        console.log("Error loading component Pouli.qml");
+    else {
+        sprite.spike = spikenum
+        sprite.num = spike[spikenum].length
+        sprite.position = Math.floor(spikenum/12)
+        console.debug(sprite.spike+","+sprite.num+","+sprite.position+","+sprite.x+","+sprite.y)
+        if (player == 1)
+            sprite.source = "images/pouli4.svg";
+        else
+            sprite.source = "images/pouli3.svg";
+        spike[spikenum].push(sprite);
     }
 }
