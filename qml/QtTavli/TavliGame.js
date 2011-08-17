@@ -2,6 +2,7 @@ var spike = Array(24);
 var dices = Array(2);
 var numPoulia = 15;
 var pouliComponent;
+var playersTurn = Math.random();
 
 function initialize() {
     var i,j;
@@ -52,5 +53,10 @@ function put(spikenum, player) {
         else
             sprite.source = "images/pouli3.svg";
         spike[spikenum].push(sprite);
+        console.debug(diceRoll())
     }
+}
+
+function diceRoll() {
+    return Math.ceil(Math.random()*6);
 }
