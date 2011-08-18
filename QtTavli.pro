@@ -35,4 +35,4 @@ CONFIG += release
 HEADERS += \
     directnetconnection.h
 
-QT += network
+QT += declarative network
