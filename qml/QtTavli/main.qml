@@ -1,3 +1,4 @@
+import TavliLib 1.0
 import QtQuick 1.0
 import "TavliGame.js" as Script
 
@@ -6,6 +7,12 @@ Rectangle {
     width: 360
     height: 360
     color: "Black"
+
+    DirectNetConnection {
+        id: dirNet
+        address: "localhost"
+        port: 1000
+    }
 
     SystemPalette { id: activePalette }
 
@@ -140,9 +147,6 @@ Rectangle {
 
             Button {
                 id: backButton
-                y: 130
-                width: 100
-                height: 100
                 anchors.leftMargin: 5
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.left: parent.left
@@ -158,6 +162,73 @@ Rectangle {
                 onClicked: mainAreaFlipable.flipped = !mainAreaFlipable.flipped
             }
 
+            Button {
+                id: netButton
+                anchors.bottomMargin: 5
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.bottom: parent.bottom
+                icon: "images/back.svg"
+            }
+
+            MouseArea {
+                id: netButtonArea
+                anchors.fill: netButton
+                hoverEnabled: true
+                onEntered: netButton.border.color = "gold"
+                onExited: netButton.border.color = "black"
+                onClicked: tint.visible = true
+            }
+        }
+    }
+
+    Rectangle {
+        id: tint
+        color: "#222222"
+        opacity: 0.8
+        width: parent.width
+        height: parent.height
+        z: 1
+        visible: false
+
+        Flipable {
+            id: flipable1
+            x: (parent.width-width)/2
+            y: parent.height/2-height/2
+            width: parent.width-parent.width/6
+            height: parent.height/4
+
+            front: Rectangle {
+                id: rectangle1
+                width: parent.width
+                height: parent.height
+                color: "#ffffff"
+                opacity: 1
+
+                Button {
+                    id: hostButton
+                    x: parent.width/10
+                    y: parent.height/2-height/2
+                    width: labelwidth + buttonBorder
+                    height: labelheight + buttonBorder
+                    label: "Host"
+                    fontSize: 50*(background.paintedWidth/background.sourceSize.width)
+                }
+
+                Button {
+                    id: connectButton
+                    x: parent.width-width-parent.width/10
+                    y: parent.height/2-height/2
+                    width: labelwidth + buttonBorder
+                    height: labelheight + buttonBorder
+                    label: "Connect to..."
+                    fontSize: 50*(background.paintedWidth/background.sourceSize.width)
+                }
+            }
+        }
+
+        MouseArea {
+            // We use this empty MouseArea to trap mouse clicks from going to the background
+            anchors.fill: parent
         }
     }
 }
