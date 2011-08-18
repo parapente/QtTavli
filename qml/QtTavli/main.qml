@@ -76,7 +76,7 @@ Rectangle {
                     }
                 }
             }
-    }
+        }
         property bool flipped: false
 
         states: State {
@@ -93,7 +93,7 @@ Rectangle {
             origin.x: mainAreaFlipable.width/2
             origin.y: mainAreaFlipable.height/2
             axis.x: 0
-            axis.y: 1;
+            axis.y: 1
             axis.z: 0
             angle: 0
         }
@@ -176,7 +176,7 @@ Rectangle {
                 hoverEnabled: true
                 onEntered: netButton.border.color = "gold"
                 onExited: netButton.border.color = "black"
-                onClicked: tint.visible = true
+                onClicked: { tint.visible = true; netFlipable.visible = true }
             }
         }
     }
@@ -190,45 +190,153 @@ Rectangle {
         z: 1
         visible: false
 
-        Flipable {
-            id: flipable1
-            x: (parent.width-width)/2
-            y: parent.height/2-height/2
-            width: parent.width-parent.width/6
-            height: parent.height/4
-
-            front: Rectangle {
-                id: rectangle1
-                width: parent.width
-                height: parent.height
-                color: "#ffffff"
-                opacity: 1
-
-                Button {
-                    id: hostButton
-                    x: parent.width/10
-                    y: parent.height/2-height/2
-                    width: labelwidth + buttonBorder
-                    height: labelheight + buttonBorder
-                    label: "Host"
-                    fontSize: 50*(background.paintedWidth/background.sourceSize.width)
-                }
-
-                Button {
-                    id: connectButton
-                    x: parent.width-width-parent.width/10
-                    y: parent.height/2-height/2
-                    width: labelwidth + buttonBorder
-                    height: labelheight + buttonBorder
-                    label: "Connect to..."
-                    fontSize: 50*(background.paintedWidth/background.sourceSize.width)
-                }
-            }
-        }
-
         MouseArea {
             // We use this empty MouseArea to trap mouse clicks from going to the background
             anchors.fill: parent
+        }
+    }
+
+    Flipable {
+        id: netFlipable
+        x: (parent.width-width)/2
+        y: parent.height/2-height/2
+        width: parent.width-parent.width/6
+        height: parent.height/4
+        visible: false
+        opacity: 0.8
+        z: 2
+
+        front: Rectangle {
+            id: netDialogMain
+            width: parent.width
+            height: parent.height
+            color: "#ffffff"
+
+            Button {
+                id: hostButton
+                x: parent.width/10
+                y: parent.height/2-height/2
+                width: labelwidth + buttonBorder
+                height: labelheight + buttonBorder
+                label: "Host Game"
+                fontSize: 50*(background.paintedWidth/background.sourceSize.width)
+            }
+
+            MouseArea {
+                id: hostButtonArea
+                anchors.fill: hostButton
+                hoverEnabled: true
+                onEntered: hostButton.border.color = "gold"
+                onExited: hostButton.border.color = "black"
+                onClicked: netFlipable.flipped = !netFlipable.flipped
+            }
+
+            Button {
+                id: connectButton
+                x: parent.width-width-parent.width/10
+                y: parent.height/2-height/2
+                width: labelwidth + buttonBorder
+                height: labelheight + buttonBorder
+                label: "Connect to..."
+                fontSize: 50*(background.paintedWidth/background.sourceSize.width)
+            }
+
+            MouseArea {
+                id: connectButtonArea
+                anchors.fill: connectButton
+                hoverEnabled: true
+                onEntered: connectButton.border.color = "gold"
+                onExited: connectButton.border.color = "black"
+                onClicked: netFlipable.flipped = !netFlipable.flipped
+            }
+        }
+
+        property bool flipped: false
+
+        states: State {
+            name: "back"
+            PropertyChanges {
+                target: netFlipRotation
+                angle: 180
+            }
+            when: netFlipable.flipped
+        }
+
+        transform: Rotation {
+            id: netFlipRotation
+            origin.x: netFlipable.width/2
+            origin.y: netFlipable.height/2
+            axis.x: 1
+            axis.y: 0
+            axis.z: 0
+            angle: 0
+        }
+
+        transitions: Transition {
+            NumberAnimation { target: netFlipRotation; property: "angle"; easing.amplitude: 1; easing.period: 0.7; easing.type: Easing.OutBounce; duration: 1500 }
+        }
+
+
+        back: Rectangle {
+            width: parent.width
+            height: parent.height
+            color: "#ffffff"
+
+            Rectangle {
+                id: hostWaitRect
+                width: parent.width
+                height: parent.height
+                color: "transparent"
+                visible: false
+
+                Text {
+                    color: "black"
+                    text: "Waiting for connection..."
+                    font.pixelSize: 50*(background.paintedWidth/background.sourceSize.width)
+                }
+
+                Button {
+                    id: abortButton
+                    anchors.bottom: parent.bottom
+                    anchors.bottomMargin: 5
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    width: labelwidth + buttonBorder
+                    height: labelheight + buttonBorder
+                    label: "Abort"
+                    fontSize: 50*(background.paintedWidth/background.sourceSize.width)
+                }
+
+                MouseArea {
+                    id: abortButtonArea
+                    anchors.fill: abortButton
+                    hoverEnabled: true
+                    onEntered: abortButton.border.color = "gold"
+                    onExited: abortButton.border.color = "black"
+                    onClicked: netFlipable.flipped = !netFlipable.flipped
+                }
+            }
+
+            Rectangle {
+                id: connectRect
+                width: parent.width
+                height: parent.height
+                color: "transparent"
+
+                TextInput {
+                    id: addressInput
+                    y: parent.height/2 - height/2
+                    width: parent.width*2/3
+                }
+
+                TextInput {
+                    id: portInput
+                    x: addressInput.width
+                    y: parent.height/2 - height/2
+                    width: parent.width/3
+                    text: dirNet.port
+                    inputMask: "ddddd"
+                }
+            }
         }
     }
 }
