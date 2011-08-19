@@ -77,7 +77,7 @@ Flipable {
             hoverEnabled: true
             onEntered: cancelButton2.border.color = "red"
             onExited: cancelButton2.border.color = "black"
-            onClicked: { netFlipable.visible = false; tint.visible = false }
+            onClicked: { netFlipable.visible = false; tint.state = "invisible" }
         }
     }
 

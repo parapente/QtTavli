@@ -176,7 +176,8 @@ Rectangle {
                 hoverEnabled: true
                 onEntered: netButton.border.color = "gold"
                 onExited: netButton.border.color = "black"
-                onClicked: { tint.visible = true; netFlipable.visible = true }
+                //onClicked: { tint.visible = true; netFlipable.visible = true }
+                onClicked: { tint.state = "visible"; netFlipable.visible = true }
             }
         }
     }
@@ -185,15 +186,38 @@ Rectangle {
         id: tint
         color: "#222222"
         opacity: 0.8
-        width: parent.width
-        height: parent.height
+        width: 0
+        height: 0
         z: 1
-        visible: false
+        visible: true
 
         MouseArea {
             // We use this empty MouseArea to trap mouse clicks from going to the background
             anchors.fill: parent
         }
+
+        Behavior on width { SmoothedAnimation { velocity: 1000 } }
+        Behavior on height { SmoothedAnimation { velocity: 1000 } }
+
+        states: [ State {
+            name: "visible"
+            PropertyChanges {
+                target: tint
+                width: tint.parent.width
+                height: tint.parent.height
+            }
+        },
+            State {
+            name: "invisible"
+            PropertyChanges {
+                target: tint
+                width: 0
+                height: 0
+            }
+        }
+        ]
+
+        //NumberAnimation { properties: "width,height"; from: 0; easing.type: Easing.InOutQuad; duration: 2000 }
     }
 
     NetDialog {
