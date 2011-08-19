@@ -32,6 +32,7 @@ Rectangle {
     }
     border.width: 2
     border.color: "#000000"
+    smooth: true
     property string icon: ""
     property string label: ""
     property color labelColor
@@ -57,6 +58,7 @@ Rectangle {
             color: labelColor
             font.pixelSize: fontSize
             anchors.horizontalCenter: parent.horizontalCenter
+            smooth: true
         }
     }
 }
