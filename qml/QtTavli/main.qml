@@ -167,7 +167,7 @@ Rectangle {
                 anchors.bottomMargin: 5
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.bottom: parent.bottom
-                icon: "images/back.svg"
+                icon: "images/earth.svg"
             }
 
             MouseArea {
@@ -214,8 +214,10 @@ Rectangle {
 
             Button {
                 id: hostButton
-                x: parent.width/10
-                y: parent.height/2-height/2
+                anchors.top: parent.top
+                anchors.topMargin: 5
+                anchors.left: parent.left
+                anchors.leftMargin: 5
                 width: labelwidth + buttonBorder
                 height: labelheight + buttonBorder
                 label: "Host Game"
@@ -228,13 +230,15 @@ Rectangle {
                 hoverEnabled: true
                 onEntered: hostButton.border.color = "gold"
                 onExited: hostButton.border.color = "black"
-                onClicked: netFlipable.flipped = !netFlipable.flipped
+                onClicked: { hostWaitRect.visible = true; connectRect.visible = false; netFlipable.flipped = !netFlipable.flipped }
             }
 
             Button {
-                id: connectButton
-                x: parent.width-width-parent.width/10
-                y: parent.height/2-height/2
+                id: connectToButton
+                anchors.top: parent.top
+                anchors.topMargin: 5
+                anchors.right: parent.right
+                anchors.rightMargin: 5
                 width: labelwidth + buttonBorder
                 height: labelheight + buttonBorder
                 label: "Connect to..."
@@ -242,12 +246,32 @@ Rectangle {
             }
 
             MouseArea {
-                id: connectButtonArea
-                anchors.fill: connectButton
+                id: connectToButtonArea
+                anchors.fill: connectToButton
                 hoverEnabled: true
-                onEntered: connectButton.border.color = "gold"
-                onExited: connectButton.border.color = "black"
-                onClicked: netFlipable.flipped = !netFlipable.flipped
+                onEntered: connectToButton.border.color = "gold"
+                onExited: connectToButton.border.color = "black"
+                onClicked: { hostWaitRect.visible = false; connectRect.visible = true; netFlipable.flipped = !netFlipable.flipped }
+            }
+
+            Button {
+                id: cancelButton2
+                anchors.bottom: parent.bottom
+                anchors.bottomMargin: 5
+                anchors.horizontalCenter: parent.horizontalCenter
+                width: labelwidth + buttonBorder
+                height: labelheight + buttonBorder
+                label: "Cancel"
+                fontSize: 50*(background.paintedWidth/background.sourceSize.width)
+            }
+
+            MouseArea {
+                id: cancelButton2Area
+                anchors.fill: cancelButton2
+                hoverEnabled: true
+                onEntered: cancelButton2.border.color = "red"
+                onExited: cancelButton2.border.color = "black"
+                onClicked: { netFlipable.visible = false; tint.visible = false }
             }
         }
 
@@ -310,7 +334,7 @@ Rectangle {
                     id: abortButtonArea
                     anchors.fill: abortButton
                     hoverEnabled: true
-                    onEntered: abortButton.border.color = "gold"
+                    onEntered: abortButton.border.color = "red"
                     onExited: abortButton.border.color = "black"
                     onClicked: netFlipable.flipped = !netFlipable.flipped
                 }
@@ -321,20 +345,115 @@ Rectangle {
                 width: parent.width
                 height: parent.height
                 color: "transparent"
+                visible: false
 
-                TextInput {
-                    id: addressInput
-                    y: parent.height/2 - height/2
-                    width: parent.width*2/3
+                Column {
+                    width: parent.width
+                    anchors.top: parent.top
+                    anchors.topMargin: 5
+                    spacing: 5
+
+                    Row {
+                        width: parent.width-10
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        spacing: 5
+
+                        Text {
+                            id: addressLabel
+                            text: "Address:"
+                            font.pixelSize: 50*(background.paintedWidth/background.sourceSize.width)
+                            smooth: true
+                        }
+
+                        Rectangle {
+                            width: parent.width - addressLabel.width - 5
+                            height: parent.height
+                            color: "white"
+                            opacity: 0.8
+
+                            TextInput {
+                                id: addressInput
+                                anchors.fill: parent
+                                focus: true
+                                font.pixelSize: 50*(background.paintedWidth/background.sourceSize.width)
+                                selectByMouse: true
+                                smooth: true
+                            }
+                        }
+                    }
+                    Row {
+                        width: parent.width-10
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        spacing: 5
+
+                        Text {
+                            id: portLabel
+                            text: "Port:"
+                            font.pixelSize: 50*(background.paintedWidth/background.sourceSize.width)
+                            smooth: true
+                        }
+
+                        Rectangle {
+                            width: parent.width - portLabel.width - 5
+                            height: parent.height
+                            color: "white"
+                            opacity: 0.8
+
+                            TextInput {
+                                id: portInput
+                                anchors.fill: parent
+                                text: dirNet.port
+                                inputMask: "00000;_"
+                                font.pixelSize: 50*(background.paintedWidth/background.sourceSize.width)
+                                selectByMouse: true
+                                smooth: true
+                            }
+                        }
+                    }
                 }
 
-                TextInput {
-                    id: portInput
-                    x: addressInput.width
-                    y: parent.height/2 - height/2
-                    width: parent.width/3
-                    text: dirNet.port
-                    inputMask: "ddddd"
+                Button {
+                    id: connectButton
+                    anchors.bottom: parent.bottom
+                    anchors.bottomMargin: 5
+                    anchors.left: parent.left
+                    anchors.leftMargin: 5
+                    //width: labelwidth + buttonBorder
+                    height: labelheight + buttonBorder
+                    width: parent.width/2-10
+                    label: "Connect"
+                    fontSize: 50*(background.paintedWidth/background.sourceSize.width)
+                }
+
+                MouseArea {
+                    id: connectButtonArea
+                    anchors.fill: connectButton
+                    hoverEnabled: true
+                    onEntered: connectButton.border.color = "lime"
+                    onExited: connectButton.border.color = "black"
+                    //onClicked: netFlipable.flipped = !netFlipable.flipped
+                }
+
+                Button {
+                    id: cancelButton
+                    anchors.bottom: parent.bottom
+                    anchors.bottomMargin: 5
+                    anchors.right: parent.right
+                    anchors.rightMargin: 5
+                    //width: labelwidth + buttonBorder
+                    height: labelheight + buttonBorder
+                    width: parent.width/2-10
+                    label: "Cancel"
+                    fontSize: 50*(background.paintedWidth/background.sourceSize.width)
+                }
+
+                MouseArea {
+                    id: cancelButtonArea
+                    anchors.fill: cancelButton
+                    hoverEnabled: true
+                    onEntered: cancelButton.border.color = "red"
+                    onExited: cancelButton.border.color = "black"
+                    onClicked: netFlipable.flipped = !netFlipable.flipped
                 }
             }
         }
