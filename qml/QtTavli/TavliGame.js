@@ -53,10 +53,6 @@ function put(spikenum, player) {
         else
             sprite.source = "images/pouli3.svg";
         spike[spikenum].push(sprite);
-        console.debug(diceRoll())
+        console.debug(dice.random())
     }
-}
-
-function diceRoll() {
-    return Math.ceil(Math.random()*6);
 }

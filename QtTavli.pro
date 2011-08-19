@@ -23,7 +23,8 @@ symbian:TARGET.CAPABILITY += NetworkServices
 
 # The .cpp file which was generated for your project. Feel free to hack it.
 SOURCES += main.cpp \
-    directnetconnection.cpp
+    directnetconnection.cpp \
+    dice.cpp
 
 # Please do not modify the following two lines. Required for deployment.
 include(qmlapplicationviewer/qmlapplicationviewer.pri)
@@ -33,6 +34,7 @@ CONFIG -= debug_and_release debug
 CONFIG += release
 
 HEADERS += \
-    directnetconnection.h
+    directnetconnection.h \
+    dice.h
 
 QT += declarative network

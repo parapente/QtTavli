@@ -14,6 +14,11 @@ Rectangle {
         port: 1000
     }
 
+    Dice {
+        id: dice
+        seed: 100
+    }
+
     SystemPalette { id: activePalette }
 
     Flipable {
