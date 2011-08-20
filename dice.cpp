@@ -18,5 +18,5 @@ uint dice::seed(void) const
 
 uint dice::random(void)
 {
-    return qrand();
+    return qrand()%6+1;
 }

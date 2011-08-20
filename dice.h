@@ -18,7 +18,6 @@ public:
 
 private:
     uint m_seed;
-
 };
 
 #endif // DICE_H
