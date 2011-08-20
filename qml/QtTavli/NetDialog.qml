@@ -36,7 +36,7 @@ Flipable {
             hoverEnabled: true
             onEntered: hostButton.border.color = "gold"
             onExited: hostButton.border.color = "black"
-            onClicked: { hostWaitRect.visible = true; connectRect.visible = false; netFlipable.flipped = !netFlipable.flipped }
+            onClicked: { hostWaitRect.visible = true; connectRect.visible = false; netFlipable.flipped = !netFlipable.flipped; dirNet.host() }
         }
 
         Button {
@@ -142,7 +142,7 @@ Flipable {
                 hoverEnabled: true
                 onEntered: abortButton.border.color = "red"
                 onExited: abortButton.border.color = "black"
-                onClicked: netFlipable.flipped = !netFlipable.flipped
+                onClicked: { netFlipable.flipped = !netFlipable.flipped; dirNet.closeHost() }
             }
         }
 

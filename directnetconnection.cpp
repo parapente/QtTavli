@@ -1,26 +1,78 @@
 #include "directnetconnection.h"
 
 directNetConnection::directNetConnection(QObject *parent) :
-    QTcpSocket(parent)
+    QObject(parent)
 {
+    m_hostAddress = "0.0.0.0";
+    m_hostPort = 0;
 }
 
-QString directNetConnection::address(void) const
+QString directNetConnection::hostAddress(void) const
 {
-    return m_address;
+    return m_hostAddress;
 }
 
-quint16 directNetConnection::port(void) const
+QString directNetConnection::connAddress(void) const
 {
-    return m_port;
+    return m_connAddress;
 }
 
-void directNetConnection::setAddress(const QString &address)
+quint16 directNetConnection::hostPort(void) const
 {
-    m_address = address;
+    return m_hostPort;
 }
 
-void directNetConnection::setPort(const quint16 &port)
+quint16 directNetConnection::connPort(void) const
 {
-    m_port = port;
+    return m_connPort;
+}
+
+void directNetConnection::setHostAddress(const QString &address)
+{
+    m_hostAddress = address;
+}
+
+void directNetConnection::setConnAddress(const QString &address)
+{
+    m_connAddress = address;
+}
+
+void directNetConnection::setHostPort(const quint16 &port)
+{
+    m_hostPort = port;
+}
+
+void directNetConnection::setConnPort(const quint16 &port)
+{
+    m_connPort = port;
+}
+
+int directNetConnection::host(void)
+{
+    if (!m_server) {
+        m_server = new QTcpServer();
+    }
+    m_server->setMaxPendingConnections(1);
+    if (m_server->listen(QHostAddress(m_hostAddress), m_hostPort) == false) {
+        return -1;
+    }
+    connect(m_server, SIGNAL(newConnection()), this, SLOT(handleNewConnection()));
+    return 0;
+}
+
+void directNetConnection::closeHost(void)
+{
+    if (m_server) {
+        m_server->close();
+        disconnect(m_server, SIGNAL(newConnection()));
+    }
+}
+
+void directNetConnection::handleNewConnection(void)
+{
+    if (m_socket)
+        delete m_socket;
+
+    m_socket = m_server->nextPendingConnection();
+    closeHost();
 }

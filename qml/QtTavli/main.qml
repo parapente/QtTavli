@@ -8,10 +8,23 @@ Rectangle {
     height: 360
     color: "Black"
 
+    Item {
+        id: helper
+        property real ratio: background.paintedWidth/background.sourceSize.width
+        // Why this numbers? Just cause... :-D
+        property int spikeWidth: 74
+        property int borderY: 50
+        property int borderX: 60
+        property int middleSpace: 90
+        property int boardWidth: 1100
+        property int boardHeight: 1000
+        property int fontSizeNormal: 50
+    }
+
     DirectNetConnection {
         id: dirNet
-        address: "localhost"
-        port: 1000
+        connAddress: "localhost"
+        connPort: 1000
     }
 
     Dice {
@@ -54,10 +67,10 @@ Rectangle {
 
                 Rectangle {
                     id: rectSpike23
-                    x: (background.width - background.paintedWidth)/2 + 60*(background.paintedWidth/background.sourceSize.width)
-                    y: (background.height - background.paintedHeight)/2 + 50*(background.paintedHeight/background.sourceSize.height)
-                    width: 74*(background.paintedWidth/background.sourceSize.width)
-                    height: 74*5*(background.paintedHeight/background.sourceSize.height)
+                    x: helper.ratio/2 + 60*helper.ratio
+                    y: helper.ratio/2 + 50*helper.ratio
+                    width: helper.spikeWidth*helper.ratio
+                    height: helper.spikeWidth*5*helper.ratio
                     color: "#00000000"
                 }
 
@@ -201,8 +214,8 @@ Rectangle {
             anchors.fill: parent
         }
 
-        Behavior on width { SmoothedAnimation { velocity: 1000 } }
-        Behavior on height { SmoothedAnimation { velocity: 1000 } }
+        Behavior on width { SmoothedAnimation { velocity: helper.ratio*3000 } }
+        Behavior on height { SmoothedAnimation { velocity: helper.ratio*3000 } }
 
         states: [ State {
             name: "visible"
@@ -227,8 +240,8 @@ Rectangle {
 
     NetDialog {
         id: netFlipable
-        ratio: background.paintedWidth/background.sourceSize.width
-        address: dirNet.address
-        port: dirNet.port
+        address: dirNet.connAddress
+        port: dirNet.connPort
+        property alias ratio: helper.ratio
     }
 }
