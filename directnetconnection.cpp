@@ -76,3 +76,49 @@ void directNetConnection::handleNewConnection(void)
     m_socket = m_server->nextPendingConnection();
     closeHost();
 }
+
+bool directNetConnection::sendMsg(uint serial, quint8 code, quint16 data)
+{
+    char *packet;
+    quint8 size;
+    int retValue;
+
+    size = sizeof(uint);
+    packet = new char[size+3];
+    for (int i=0; i<size; i++)
+        packet[i] = (char) ((serial >> (i*8)) & 0xff);
+    packet[size] = code;
+    packet[size+1] = (char) (data & 0xff);
+    packet[size+2] = (char) ((data >> 1) & 0xff);
+    retValue = m_socket->write(packet, size+3);
+
+    delete packet;
+
+    if (retValue ==1)
+        return false;
+    else
+        return true;
+}
+
+bool directNetConnection::readMsg(uint &serial, uchar &code, ushort &data)
+{
+    char *packet;
+    quint8 size;
+
+    size = sizeof(uint);
+    packet = new char[size+3];
+    if (m_socket->read(packet, size+3) == -1) {
+        delete packet;
+        return false;
+    }
+    else {
+        serial = 0;
+        for (int i=0; i<size; i++)
+            serial |= ((uint) (uchar) packet[i]) << (i*8);
+        code = packet[size];
+        data = (uchar) packet[size+1];
+        data |= ((uint) (uchar) packet[size+2]) << 8;
+        delete packet;
+        return true;
+    }
+}

@@ -28,6 +28,8 @@ public:
 
     Q_INVOKABLE int host(void);
     Q_INVOKABLE void closeHost(void);
+    Q_INVOKABLE bool sendMsg(uint serial, uchar code, ushort data);
+    Q_INVOKABLE bool readMsg(uint &serial, uchar &code, ushort &data);
 
 signals:
     void hostAddressChanged(void);
